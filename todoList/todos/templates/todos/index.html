@@ -1,0 +1,34 @@
+<html>
+<title>TODO LIST APP</title>
+
+<body> 
+
+<h2>WHAT DO YOU WANT TO DO TODAY?</h2>
+
+<form action="{% url 'add' %}" method="POST" role="form">
+  {% csrf_token %}
+  {{ form.text }}
+  <button type="submit">Submit</button>
+</form>
+
+
+<ul>
+	{% for todo in todo_list %}
+	{% if todo.complete %}	
+	
+	<li>{{ todo.text }}</li>
+	{%else%}
+	<form action="{% url 'complete' %}" method="POST" role="form">	
+ {% csrf_token %}			
+	<li><input type='checkbox' name='check[]' value={{todo.id}}>{{todo.text}}</li>
+	
+	{% endif %}					
+	{% endfor %}
+
+	<input type='submit' name='complete' value='complete'/>
+	<input type='submit' name='delete' value='delete'/>
+</form>
+</ul>
+
+</body>
+</html>
